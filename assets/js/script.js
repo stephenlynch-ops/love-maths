@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
     for(let button of buttons){
         button.addEventListener("click", function(){
             if (this.getAttribute("data-type") === "submit"){
-                alert("You clicked Submit!");
+                checkAnswer();
             } else {
                 let gameType = this.getAttribute("data-type");
                 runGame(gameType);
@@ -38,12 +38,42 @@ function runGame(gameType) {
     }
 }
 
+/**
+ * Checks the answer against the first element in
+ * the returned calculateCorrectAnswer array
+ */
 function checkAnswer() {
 
+    let userAnswer = parseInt(document.getElementById("answer-box").value);
+    let calculatedAnswer = calculateCorrectAnswer();
+    let isCorrect = userAnswer === calculatedAnswer[0];
+
+    // if(isCorrect) is the same as if(isCorrect = true)
+    if (isCorrect) {
+        alert("Hey you got it right :D");
+    } else {
+        alert(`Awwww.... you answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}!`);
+    }
+
+    runGame(calculatedAnswer[1]);
 }
 
+/**
+ * Gets the operands (numbers) and the oeprator (plus, minus etc.)
+ * directly from the DOM, and returns the correct answer.
+ */
 function calculateCorrectAnswer() {
+    // The parseInt is treating the result as an integer, the default in JavaScript is a string
+    let operand1 = parseInt(document.getElementById('operand1').innerText);
+    let operand2 = parseInt(document.getElementById('operand2').innerText);
+    let operator = document.getElementById('operator').innerText;
 
+    if (operator === "+") {
+        return [operand1 + operand2, "addition"];
+    } else {
+        alert(`Unimplemented operator ${operator}`);
+        throw `Unimplemented operator ${operator}, Aborting!`;
+    }
 }
 
 function incrementScore() {
