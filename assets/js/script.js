@@ -35,6 +35,8 @@ function runGame(gameType) {
         displayMultiplyQuestion(num1, num2);
     } else if (gameType === 'subtract') {
         displaySubtractQuestion(num1, num2);  
+    } else if (gameType === 'division') {
+        displayDivisionQuestion(num1, num2);  
     } else {
         alert(`Unknown game type: ${gameType}`);
         // The throw key word stops the game from running and passes the message to the console for debugging
@@ -78,8 +80,10 @@ function calculateCorrectAnswer() {
         return [operand1 + operand2, "addition"];
     } else if (operator === "x") {
         return [operand1 * operand2, "multiply"];
-    } else if (operator === "-") {
-        return [operand1 - operand2, "subtract"]  
+    } else if (operator === "-") {            
+        return [operand1 - operand2, "subtract"];  
+    } else if (operator === "/") {
+        return [operand1 / operand2, "division"] ; 
     } else {
         alert(`Unimplemented operator ${operator}`);
         throw `Unimplemented operator ${operator}, Aborting!`;
@@ -112,8 +116,9 @@ function displayAdditionQuestion(operand1, operand2) {
 }
 
 function displaySubtractQuestion(operand1, operand2) {
-    document.getElementById('operand1').textContent = operand1;
-    document.getElementById('operand2').textContent = operand2;
+    // op1 > op2 is the if statement folloed by ? then we have op1 if true and op2 if false seperated by :
+    document.getElementById('operand1').textContent = operand1 > operand2 ? operand1 : operand2;
+    document.getElementById('operand2').textContent = operand1 > operand2 ? operand2 : operand1;
     document.getElementById('operator').textContent = "-";
 }
 
@@ -121,4 +126,10 @@ function displayMultiplyQuestion(operand1, operand2) {
     document.getElementById('operand1').textContent = operand1;
     document.getElementById('operand2').textContent = operand2;
     document.getElementById('operator').textContent = "x";
+}
+
+function displayDivisionQuestion(operand1, operand2) {
+    document.getElementById('operand1').textContent = operand1;
+    document.getElementById('operand2').textContent = operand2;
+    document.getElementById('operator').textContent = "/";
 }
