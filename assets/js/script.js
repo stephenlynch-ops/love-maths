@@ -15,6 +15,13 @@ document.addEventListener("DOMContentLoaded", function() {
         })
     }
 
+    // Allows the user to submit their answer by pressing enter instead of having to click submit Very cool!!!
+    document.getElementById("answer-box").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            checkAnswer();
+        }
+    })
+
     runGame("addition");
 
 
@@ -25,6 +32,12 @@ document.addEventListener("DOMContentLoaded", function() {
  * and after the user's answer has been processed
  */
 function runGame(gameType) {
+
+    // Removes the last questions answer from the answer box
+    document.getElementById("answer-box").value = "";
+    // Addes focus to the answer box i.e. makes this the selected item on the page on loading / running
+    document.getElementById("answer-box").focus();
+
     // Generates two random numbers between 1 and 25. The math.floor gives us a whole number and the +1 means we can get a 0
     let num1 = Math.floor(Math.random() * 25) + 1;
     let num2 = Math.floor(Math.random() * 25) + 1;
